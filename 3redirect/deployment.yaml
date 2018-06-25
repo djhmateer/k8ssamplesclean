@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: redirect
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: redirect-dep
+    spec:
+      containers:
+      - name: redirect
+        image: davemateer/redirectnginx
+        #image: davem.azurecr.io/redirectnginx
+        ports:
+        - containerPort: 80
+      #imagePullSecrets:
+      #- name: davemazurecr
+      
+              

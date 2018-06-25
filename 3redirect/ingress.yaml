@@ -1,0 +1,39 @@
+# app-ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    #nginx.ingress.kubernetes.io/from-to-www-redirect: "true"
+spec:
+  rules:
+  - host: www.hoverflylagoons.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: app1-svc
+          servicePort: 80
+        path: /
+  - host: hoverflylagoons.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: redirect-svc
+          servicePort: 80
+        path: /
+
+  - host: www.programgood.net 
+    http:
+      paths:
+      - backend:
+          serviceName: app2-svc
+          servicePort: 80
+        path: /
+  - host: programgood.net
+    http:
+      paths:
+      - backend:
+          serviceName: redirect-svc
+          servicePort: 80
+        path: /

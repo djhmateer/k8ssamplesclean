@@ -1,0 +1,29 @@
+# app-ingress.yaml
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hoverflylagoons-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - hoverflylagoons.co.uk
+    secretName: hoverflylagoons-ssl
+  rules:
+  # this is the main site
+  - host: hoverflylagoons.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: hoverflylagoons-svc
+          servicePort: 80
+        path: /
+  # want this to redirect to main site
+  - host: www.hoverflylagoons.co.uk
+    http:
+      paths:
+      - backend:
+          serviceName: redirect-svc
+          servicePort: 80
+        path: /
